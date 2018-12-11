@@ -1,6 +1,6 @@
 """/*******************************************
  * - Coded by Moh.Massoud
- * - Problem: Merging multiple pdf files togrther into single one
+ * - Problem: Merging multiple pdf files togrther into a single one
  ********************************************/"""
 import sys
 from PyPDF2 import PdfFileMerger, PdfFileReader
@@ -15,7 +15,7 @@ for file in sys.argv[1:]:
         merge.write("output.pdf")
 print ("Success\n" if x==1 else "Fail\n")
 """Note:***********************************************************
-        you can use pyinstaller to make an excutable .exe file
+        you can use pyinstaller to make an executable .exe file
         so you can drag and drop the pdf files into it's icon
-        and the output pdf will appear next to itself.
+        and the output pdf will appear next to it.
 ***************************************************************/"""
