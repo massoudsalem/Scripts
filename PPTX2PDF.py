@@ -2,27 +2,29 @@
  * - Coded by Moh.Massoud
  * - Problem: Converting multiple PPT files to PDF.
  ********************************************/"""
-import os   
-import sys
-import comtypes.client
+import os,comtypes.client,sys
 
 powerpoint = comtypes.client.CreateObject("Powerpoint.Application")
 powerpoint.Visible = 1
 
 for file in sys.argv[1:]:
-    x=0
+    flag = False
 
-    mypath = os.path.abspath(__file__)
-    mydir = os.path.dirname(mypath)
-    file_input = os.path.join(mydir, file) #creating the abs dir for the file
+    currentPath = os.path.abspath(__file__)
+    currentDir = os.path.dirname(currentPath)
+    dirWithFileName = os.path.join(currentDir, file)  #creating the abs dir for the file
 
-    if file_input[-4:]=='pptx' or file_input[-3:]=='ppt':
-        deck = powerpoint.Presentations.Open(file_input)
-        deck.SaveAs(file_input[:-4]+'pdf' if file_input[-4:]=='pptx' else file_input[-3:]+'pdf', 32) # add pdf,formatType = 32 for ppt to pdf
-        deck.Close()
-        x=1
+    if dirWithFileName[-4:] == 'pptx' or dirWithFileName[-3:] == 'ppt':
+        powerpointWindow = powerpoint.Presentations.Open(dirWithFileName)
 
-    print ("Success\n" if x==1 else "Fail\n")
+        powerpointWindow.SaveAs(dirWithFileName[:-4] + 'pdf'
+                                if dirWithFileName[-4:] == 'pptx'
+                                else dirWithFileName[:-3] + 'pdf', 32)  # add pdf, formatType = 32 for ppt to pdf
+
+        powerpointWindow.Close()
+        flag = True
+
+    print("Success" if flag else ("Fail to convert " + file))
 
 powerpoint.Quit()
 
